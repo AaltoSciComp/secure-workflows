@@ -46,6 +46,16 @@ LINES TERMINATED BY '\r\n' IGNORE 1 LINES;
 SELECT * FROM people LIMIT 10;  
 ```
 
+
+These are also needed to solve connection issues
+
+```
+CREATE USER 'root'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
+```
+
+
+
 The file `fake_individuals.csv` was created with `generate_fake_individuals.py`
 
 
