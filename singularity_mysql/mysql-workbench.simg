@@ -1,0 +1,39 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%post
+    apt-get -y update
+    apt-get -y upgrade
+
+    # Install some essential tools and libraries
+    apt-get -y install wget curl gnupg software-properties-common lsb-release ca-certificates
+
+    # Add MySQL APT repository
+    #wget https://dev.mysql.com/get/mysql-apt-config_0.5.3-1_all.deb
+    wget https://dev.mysql.com/get/mysql-apt-config_0.8.24-1_all.deb
+    #dpkg -i mysql-apt-config_0.5.3-1_all.deb
+    dpkg -i mysql-apt-config_0.8.24-1_all.deb
+    apt-get update
+
+    # Install MySQL Server and Client
+    #apt-get -y install mysql-server mysql-client
+
+    # Install MySQL Workbench
+    apt-get -y install mysql-workbench-community
+    apt-get install -y gnome-keyring
+
+    # Clean up
+    #apt-get clean
+    #rm -rf /var/lib/apt/lists/*
+
+%startscript
+    echo "Starting MySQL server"
+    service mysql start
+    echo "MySQL server started"
+
+%runscript
+    echo "This is a Singularity container with Ubuntu 22.04, MySQL, and MySQL Workbench."
+
+%environment
+    export SINGULARITY_MYSQL_CONTAINER=1
+
