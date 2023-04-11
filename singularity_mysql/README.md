@@ -11,7 +11,7 @@ Solution: two singularity containers, one that runs the mysql server and one tha
 ```
 apptainer pull docker://library/mysql:latest
 ```
-This generates the file `mysql_latest.sif` (already available in the repository)
+This generates the file `mysql_latest.sif` (pre-built available at https://drive.google.com/file/d/1dQEzCUDuwzWX-Bfjqjb_yGrs7VdgMwi9/view?usp=share_link)
 
 ### 1.2 Create singularity container for mysql-workbench
 
@@ -19,7 +19,7 @@ This generates the file `mysql_latest.sif` (already available in the repository)
 apptainer build mysql-workbench.simg
 ```
 
-This generates the file `mysql-workbench.sif` (already available in the repository)
+This generates the file `mysql-workbench.sif` (prebuilt available at https://drive.google.com/file/d/1IHeRKDcqpS49r7Rm58bCAeUwtVrwt04B/view?usp=share_link)
 
 ### 2. Run the database
 
