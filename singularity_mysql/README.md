@@ -63,7 +63,7 @@ The file `fake_individuals.csv` was created with `generate_fake_individuals.py`
 
 #### First time
 
-Run `apptainer exec  mysql_workbench.sif mysql-workbench`. Quit workbench and edit the file in `~/.mysql/workbench/connections.xml` to set the root password for the connection to the database.
+Run `singularity exec  mysql_workbench.sif mysql-workbench`. Quit workbench and edit the file in `~/.mysql/workbench/connections.xml` to set the root password for the connection to the database.
 
 Then run it again and query the test database e.g. with `SELECT * FROM people LIMIT 10;`.
 
