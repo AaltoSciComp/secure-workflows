@@ -47,7 +47,8 @@ SELECT * FROM people LIMIT 10;
 ```
 
 
-These are also needed to solve connection issues. Here we create a user called "demo" identified with password "password". This is the user that we can set to mysql-workbench to use for connecting to the database. 
+
+Then we need to solve connection issues because these two containers are like running in two different machines. So, instead of using localhost, we make sure that a user can access the database also from other locations. Here for this purpose, we create a user called "demo" identified with password "password". This is the user that we can set to mysql-workbench to use for connecting to the database. 
 
 ```
 CREATE USER 'demo'@'%' IDENTIFIED BY 'password';
