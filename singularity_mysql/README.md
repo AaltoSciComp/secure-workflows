@@ -9,14 +9,14 @@ Solution: two singularity containers, one that runs the mysql server and one tha
 ### 1.1 Create singularity container for mysql
 
 ```
-apptainer pull docker://library/mysql:latest
+singularity pull docker://library/mysql:latest
 ```
 This generates the file `mysql_latest.sif` (pre-built available at https://drive.google.com/file/d/1dQEzCUDuwzWX-Bfjqjb_yGrs7VdgMwi9/view?usp=share_link)
 
 ### 1.2 Create singularity container for mysql-workbench
 
 ```
-apptainer build mysql-workbench.simg
+singularity build mysql-workbench.simg
 ```
 
 This generates the file `mysql-workbench.sif` (prebuilt available at https://drive.google.com/file/d/1IHeRKDcqpS49r7Rm58bCAeUwtVrwt04B/view?usp=share_link)
@@ -47,11 +47,11 @@ SELECT * FROM people LIMIT 10;
 ```
 
 
-These are also needed to solve connection issues
+These are also needed to solve connection issues. Here we create a user called "demo" identified with password "password". This is the user that we can set to mysql-workbench to use for connecting to the database. 
 
 ```
-CREATE USER 'root'@'%' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
+CREATE USER 'demo'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'demo'@'%';
 ```
 
 
@@ -63,7 +63,7 @@ The file `fake_individuals.csv` was created with `generate_fake_individuals.py`
 
 #### First time
 
-Run `singularity exec  mysql-workbench.sif mysql-workbench`. Quit workbench and edit the file in `~/.mysql/workbench/connections.xml` to set the root password for the connection to the database.
+Run `singularity exec  mysql-workbench.sif mysql-workbench`. Quit workbench and edit the file in `~/.mysql/workbench/connections.xml` to set the user "demo" and the password "password" for the connection to the database.
 
 Then run it again and query the test database e.g. with `SELECT * FROM people LIMIT 10;`.
 
