@@ -1,0 +1,74 @@
+BootStrap: docker
+From: ubuntu:22.04
+
+%labels
+    Maintainer Aalto Scientific Computing (original recipe from uconn-hpc)
+
+%setup
+    mkdir -p ${SINGULARITY_ROOTFS}/opt/bind
+    mkdir -p ${SINGULARITY_ROOTFS}/opt/software/3DSlicer
+
+%help
+    A baseline container of Ubuntu 22.04 LTS with 3DSlicer. Run with "apptainer run --nv --bind /tmp/.X11-unix:/tmp/.X11-unix --bind ~/.slicer/user:/var/cache/user --env DISPLAY=$DISPLAY /l/eglerean/slicer/slicer.sif"
+
+%environment
+    LC_ALL=C
+    LD_LIBRARY_PATH=/usr/local/lib64:/usr/local/lib:/usr/lib64:/usr/lib:/lib64:/lib
+    TZ='America/New_York'
+    export LC_ALL LD_LIBRARY_PATH TZ
+
+%post
+    apt-get update -qq
+    apt-get install -qq -y wget \
+                       xz-utils \
+                       cmake \
+                       vim \
+                       less
+
+    # Get 3DSlicer
+    wget -P /opt/software/3DSlicer https://download.slicer.org/bitstream/660f92ed30e435b0e355f1a4
+    tar -xf /opt/software/3DSlicer/660f92ed30e435b0e355f1a4 -C /opt/software/3DSlicer
+
+    # Install dependencies for 3DSlicer
+    apt-get install -qq -y libfontconfig1 \
+                       libxrender1 \
+                       libgl1-mesa-dev \
+                       libglu1-mesa \
+                       libglu1-mesa-dev \
+                       libxtst6 \
+                       libxt-dev \
+                       libpulse-dev \
+                       libnss3-dev \
+                       libxcomposite-dev \
+                       libxcursor-dev \
+                       libxi-dev \
+                       libxrandr-dev \
+                       libasound2-dev \
+                       mesa-utils \
+                       xvfb \
+                       libxcb-icccm4 \
+                       libxcb-icccm4-dev \
+                       libx11-xcb1 \
+                       libxcb-image0 \
+                       libxcb-keysyms1 \
+                       libxcb-randr0 \
+                       libxcb-render-util0 \
+                       libxcb-render0 \
+                       libxcb-shape0 \
+                       libxcb-shm0 \
+                       libxcb-sync1 \
+                       libxcb-util1 \
+                       libxcb-xfixes0
+
+    apt-get install -y libxdamage1 libxkbcommon0 libxkbcommon-x11-0 libxcb-xinerama0
+    mkdir /var/cache/user
+    mkdir /m
+    mkdir /l
+    mkdir /scratch
+
+    # Clean up
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+%runscript
+    /opt/software/3DSlicer/Slicer-5.6.2-linux-amd64/Slicer
